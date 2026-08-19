@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-  :root{--lime:#c6f432;--dark:#0c0d0b;--bg:#08090a;--panel:#111310;--off:#e9ecdf;--mut:#8ea62f;--gray:#8f958a;}
+  :root{--lime:#15d33e;--dark:#0c0d0b;--bg:#08090a;--panel:#111310;--off:#e9ecdf;--mut:#0f8f3a;--gray:#8f958a;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--off);font-family:'Share Tech Mono',monospace;line-height:1.6;min-height:100vh;
     display:flex;flex-direction:column;}
@@ -17,12 +17,12 @@
   a:hover{text-decoration:underline;}
   .wrap{max-width:720px;margin:0 auto;padding:0 24px;width:100%;}
   header{padding:60px 0 20px;text-align:center;}
-  .mark{width:56px;height:56px;margin:0 auto 22px;}
-  h1{font-family:'Orbitron',sans-serif;font-weight:900;letter-spacing:2px;font-size:clamp(28px,5vw,40px);color:#f4f7ea;}
-  .kick{color:var(--mut);letter-spacing:3px;font-size:13px;margin-top:10px;text-transform:uppercase;}
+  .logo{width:min(260px,60vw);height:auto;margin:0 auto;display:block;}
+  h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+  .kick{color:var(--mut);letter-spacing:3px;font-size:13px;margin-top:14px;text-transform:uppercase;}
   main{flex:1;padding:20px 0 60px;}
   p.lede{color:#c7ccb6;font-size:16px;max-width:520px;margin:26px auto 0;text-align:center;}
-  .card{background:var(--panel);border:1px solid rgba(198,244,50,.15);border-radius:14px;padding:28px;margin-top:40px;}
+  .card{background:var(--panel);border:1px solid rgba(21,211,62,.15);border-radius:14px;padding:28px;margin-top:40px;}
   .card h2{font-family:'Orbitron',sans-serif;font-weight:700;color:var(--lime);font-size:18px;letter-spacing:1px;}
   .card p{color:#aab097;font-size:14px;margin-top:10px;}
   .card a.btn{display:inline-block;margin-top:16px;background:var(--lime);color:var(--dark);font-family:'Orbitron',sans-serif;
@@ -35,8 +35,8 @@
 <body>
 <div class="wrap">
   <header>
-    <svg class="mark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#c6f432" stroke-width="9"/><path d="M63.5 33.9 A21 21 0 1 0 63.5 66.1" fill="none" stroke="#c6f432" stroke-width="9"/><line x1="50" y1="50" x2="72" y2="50" stroke="#c6f432" stroke-width="9"/></svg>
-    <h1>TORRE MATRIX LLC</h1>
+    <img class="logo" src="logo.png" alt="Torre Matrix LLC">
+    <h1>Torre Matrix LLC</h1>
     <div class="kick">// Software development &amp; publishing</div>
   </header>
   <main>
