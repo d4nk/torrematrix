@@ -4,70 +4,461 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Torre Matrix LLC</title>
-<meta name="description" content="Torre Matrix LLC — a Cathedral City, California software development and publishing company. Maker of Overclock, plus website design and back-office support for small businesses.">
+<meta name="description" content="Torre Matrix LLC — website design and builds for local businesses in Cathedral City, California. $0 down, 24–48hr turnaround. Also home to Overclock and back-office support.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Titillium+Web:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--lime:#15d33e;--dark:#0c0d0b;--bg:#08090a;--panel:#111310;--off:#e9ecdf;--mut:#0f8f3a;--gray:#8f958a;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--off);font-family:'Share Tech Mono',monospace;line-height:1.6;min-height:100vh;
-    display:flex;flex-direction:column;}
-  a{color:var(--lime);text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  .wrap{max-width:720px;margin:0 auto;padding:0 24px;width:100%;}
-  header{padding:60px 0 20px;text-align:center;}
-  .logo{width:min(260px,60vw);height:auto;margin:0 auto;display:block;}
-  h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
-  .kick{color:var(--mut);letter-spacing:3px;font-size:13px;margin-top:14px;text-transform:uppercase;}
-  main{flex:1;padding:20px 0 60px;}
-  p.lede{color:#c7ccb6;font-size:16px;max-width:520px;margin:26px auto 0;text-align:center;}
-  .card{background:var(--panel);border:1px solid rgba(21,211,62,.15);border-radius:14px;padding:28px;margin-top:40px;}
-  .card h2{font-family:'Orbitron',sans-serif;font-weight:700;color:var(--lime);font-size:18px;letter-spacing:1px;}
-  .card p{color:#aab097;font-size:14px;margin-top:10px;}
-  .card a.btn{display:inline-block;margin-top:16px;background:var(--lime);color:var(--dark);font-family:'Orbitron',sans-serif;
-    font-weight:900;letter-spacing:1px;font-size:13px;padding:11px 20px;border-radius:9px;}
-  .card a.btn:hover{text-decoration:none;filter:brightness(1.08);}
-  footer{border-top:1px solid #191c15;padding:26px 0;color:var(--gray);font-size:12px;text-align:center;}
-  footer a{color:var(--mut);}
+  :root{
+    --bg:#07080a;
+    --panel:#17191a;
+    --panel-hi:#212423;
+    --recess:#0b0c0d;
+    --metal-hi:#e2e2e2;
+    --metal-mid:#8d8f8c;
+    --metal-lo:#38393a;
+    --line:#2c2e2d;
+    --ink:#ecefe6;
+    --sub:#aab097;
+    --mut:#8c9280;
+    --green:#15d33e;
+    --green-dim:#0a5c1f;
+    --green-deep:#062f11;
+    --danger-off:#3a1414;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;}
+  html{background:var(--bg); scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Titillium Web',-apple-system,BlinkMacSystemFont,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2{font-family:'Aldrich',sans-serif; font-weight:400; letter-spacing:.02em;}
+  /* engraved-label look: a light lip below the letter, a dark cut above it —
+     as if the panel material were milled away to leave the character raised */
+  h2, .label, .rating-row span:first-child{
+    text-shadow: 0 -1px 0 rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.06);
+  }
+  ::selection{background:var(--green-dim); color:#fff;}
+  a{color:var(--green);}
+  :focus-visible{outline:2px solid var(--green); outline-offset:3px; border-radius:2px;}
+
+  /* brushed-metal texture, reused everywhere a panel surface appears */
+  .brushed{
+    background-image:
+      repeating-linear-gradient(100deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,.05), transparent 55%),
+      linear-gradient(180deg, var(--panel-hi), var(--panel) 40%, #101212 100%);
+  }
+
+  .frame{
+    position:relative; z-index:1; max-width:920px; margin:0 auto; padding:52px 20px 40px;
+  }
+
+  /* circuit traces behind the panel — the wiring you'd expect backing a
+     real instrument chassis, not decoration for its own sake. Native SVG
+     + CSS, no dependency: only shows in the page margin since the chassis
+     itself is a fully opaque surface, so it never competes with content. */
+  .circuit-bg{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .circuit-bg path{ fill:none; stroke:var(--green); stroke-linecap:round; }
+  @media (prefers-reduced-motion: no-preference){
+    .circuit-bg path{ animation: trace-flow linear infinite; }
+    @keyframes trace-flow{ to{ stroke-dashoffset:-2000; } }
+  }
+
+  /* one continuous machined chassis holds every section — a real panel
+     is one object with seams, not a stack of separately-shadowed cards */
+  .chassis{
+    position:relative; border:1px solid var(--line); border-radius:20px; overflow:hidden;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 10px 18px -14px rgba(0,0,0,.85);
+    --mx:50%; --my:0%;
+  }
+  /* signature interaction: light catching brushed metal as the pointer
+     moves — the panel's own material responding, not a decorative overlay */
+  .chassis::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(440px 440px at var(--mx) var(--my), rgba(255,255,255,.20), transparent 72%);
+    mix-blend-mode:overlay; opacity:0; transition:opacity .4s ease;
+  }
+  .chassis:hover::after{ opacity:1; }
+  @media (hover:none){ .chassis::after{ display:none; } }
+  .seam{
+    height:1px; margin:0 26px; background:var(--line); box-shadow:0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .rivet{
+    position:absolute; width:14px; height:14px; border-radius:50%;
+    background:var(--metal-mid);
+    box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 -1px 1px rgba(0,0,0,.5);
+  }
+  .rivet::after{
+    content:""; position:absolute; inset:0; margin:auto; width:8px; height:1.5px;
+    background:rgba(0,0,0,.55); border-radius:1px;
+  }
+  .rivet.tl{top:14px; left:14px;} .rivet.tr{top:14px; right:14px;}
+  .rivet.bl{bottom:14px; left:14px;} .rivet.br{bottom:14px; right:14px;}
+
+  /* ===== console / hero ===== */
+  .console{
+    position:relative; padding:44px 24px 34px; text-align:center; overflow:hidden;
+  }
+  .console .logo{
+    width:min(220px,52vw); height:auto; display:block; margin:0 auto 6px;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.6));
+  }
+
+  .readout{
+    margin:18px auto 10px; max-width:680px; font-size:clamp(15px,3.4vw,20px);
+    font-family:'JetBrains Mono',monospace; font-weight:600; letter-spacing:.02em;
+    color:var(--ink); display:flex; flex-wrap:wrap; justify-content:center; gap:.5em 0;
+    background:var(--recess); border-radius:10px; padding:12px 20px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,.65), inset 0 -1px 0 rgba(255,255,255,.03);
+  }
+  .readout-line{
+    color:var(--green); font-weight:700; opacity:1;
+  }
+  .readout-sep{ color:var(--mut); margin:0 .55em; }
+  .subhead{
+    max-width:52ch; margin:0 auto 30px; color:var(--sub); font-size:14.5px;
+  }
+
+  .switchbank{
+    display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:6px;
+  }
+  .switch{
+    --lit:0; --rx:0deg; --ry:0deg; --sx:1;
+    position:relative; appearance:none; border:none;
+    background:linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.06));
+    border-radius:12px; padding:14px 16px 12px; width:150px; min-height:132px;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    text-decoration:none; cursor:pointer; font-family:'Titillium Web',sans-serif;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,.55), inset 0 -1px 0 rgba(255,255,255,.03);
+    transform: perspective(600px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--sx));
+    transition:background .25s ease, transform .35s cubic-bezier(.23,1,.32,1);
+  }
+  .switch:hover{ background:linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,.08)); }
+  /* a real switch gives immediate tactile feedback the instant you press
+     it — before anything about page position changes */
+  .switch.pressed{ transform: perspective(600px) scale(.93) !important; transition:transform .12s ease; }
+  /* the switches are the one object small enough to physically "handle" —
+     a slight tilt toward the pointer plus a tracked sheen sells them as
+     real controls sitting proud of the panel, not flat page furniture */
+  .switch::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background: radial-gradient(110px 110px at var(--px,50%) var(--py,50%), rgba(255,255,255,.08), transparent 70%);
+    opacity:0; transition:opacity .3s ease; mix-blend-mode:overlay;
+  }
+  .switch:hover::before{ opacity:1; }
+  @media (hover:none){ .switch::before{ display:none; } }
+  .toggle{
+    position:relative; width:46px; height:24px; border-radius:999px;
+    background:linear-gradient(180deg, #050505, #1a1c1b);
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.75), inset 0 -1px 0 rgba(255,255,255,.04);
+  }
+  .toggle .knob{
+    position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%;
+    background:var(--metal-hi);
+    box-shadow:0 1px 3px rgba(0,0,0,.6);
+    transition:left .28s cubic-bezier(.34,1.56,.64,1);
+  }
+  .switch.on .toggle .knob{ left:25px; }
+  .switch.on .toggle{ background:linear-gradient(180deg, var(--green-deep), #0c1f10); }
+  /* the LED means one thing only: "this is the primary/recommended circuit" —
+     it stays lit regardless of scroll position. Knob position + label color
+     are the separate "you are viewing this section" scrollspy signal. */
+  .led{
+    width:8px; height:8px; border-radius:50%; background:var(--green-deep);
+    box-shadow:inset 0 0 2px rgba(0,0,0,.6);
+  }
+  .switch.primary .led{ background:var(--green); box-shadow:0 0 8px 2px rgba(21,211,62,.65); }
+  .label{ font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--sub); line-height:1.35; }
+  .switch.on .label{ color:var(--ink); }
+  .switch.primary .label::after{
+    content:"— request a quote"; display:block; margin-top:4px;
+    font-size:11px; font-weight:600; letter-spacing:.02em; text-transform:none; color:var(--green);
+  }
+
+  /* ===== plates / sections ===== */
+  .plate{
+    scroll-margin-top:24px; padding:30px 26px;
+  }
+  .plate h2{ font-size:19px; margin:0 0 6px; color:var(--ink); }
+  .plate p{ color:var(--sub); max-width:60ch; margin:0 0 18px; font-size:14.5px; }
+
+  .spec-list{ list-style:none; margin:0 0 20px; padding:0; border-top:1px solid var(--line); }
+  .spec-list li{
+    display:flex; justify-content:space-between; gap:16px; padding:9px 2px;
+    border-bottom:1px solid var(--line); font-size:13px;
+  }
+  .spec-list li span:first-child{ color:var(--mut); letter-spacing:.05em; text-transform:uppercase; font-size:11.5px; }
+  .spec-list li span:last-child{
+    font-family:'JetBrains Mono',monospace; font-weight:600; color:var(--green); text-align:right;
+  }
+  .fineprint{ color:var(--mut); font-size:12px; margin:14px 0 0; }
+
+  .cta{
+    position:relative; overflow:hidden;
+    display:inline-flex; align-items:center; gap:8px; background:var(--green);
+    color:#04170a; font-family:'JetBrains Mono',monospace; font-weight:700;
+    font-size:13px; letter-spacing:.03em; padding:12px 18px; border-radius:9px;
+    text-decoration:none; box-shadow:0 10px 22px -10px rgba(0,0,0,.7);
+  }
+  .cta:hover{ filter:brightness(1.08); }
+  .cta.secondary{
+    background:transparent; color:var(--green); border:1px solid var(--green-dim);
+    box-shadow:none;
+  }
+  /* a real machined surface catches a travelling reflection — the
+     primary button only, since a transparent ghost button has no
+     metal face for light to cross */
+  .cta:not(.secondary)::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.55) 49%, rgba(255,255,255,.55) 53%, transparent 68%);
+    transform: translateX(-130%);
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .cta:not(.secondary):hover::after{ animation: metal-sweep .8s ease-out forwards; }
+    @keyframes metal-sweep{ to{ transform:translateX(130%); } }
+  }
+
+  /* ===== client report (testimonial) =====
+     lives inside the Packages plate as a ruled log entry — hairlines like
+     the spec list, no border+shadow card (One Chassis Rule) */
+  .report{ margin:-4px 0 22px; padding:0 0 16px; border-bottom:1px solid var(--line); }
+  .report .label{ display:block; color:var(--mut); font-size:11.5px; margin:0 0 10px; }
+  .report blockquote{ margin:0; }
+  .report blockquote p{
+    color:var(--ink); font-size:15.5px; line-height:1.7; max-width:64ch; margin:0;
+  }
+  .report blockquote p::before{ content:"\201C"; color:var(--green); font-family:'Aldrich',sans-serif; font-size:1.35em; line-height:0; margin-right:.06em; }
+  .report blockquote p::after{ content:"\201D"; color:var(--green); font-family:'Aldrich',sans-serif; font-size:1.35em; line-height:0; margin-left:.04em; }
+  .report figcaption{ margin-top:14px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; font-size:13px; color:var(--sub); }
+  .report .who{ color:var(--ink); font-weight:700; }
+  .report figcaption a{ color:var(--green); text-decoration:none; font-weight:600; }
+  .report figcaption a:hover{ text-decoration:underline; text-underline-offset:2px; }
+
+  /* ===== footer rating plate ===== */
+  .rating-plate{
+    padding:18px 26px; font-family:'JetBrains Mono',monospace; font-size:12px;
+  }
+  .rating-row{
+    display:flex; justify-content:space-between; gap:14px; padding:6px 0;
+    border-bottom:1px dashed var(--line); color:var(--sub);
+  }
+  .rating-row:last-child{ border-bottom:none; }
+  .rating-row span:first-child{ color:var(--mut); letter-spacing:.08em; }
+  .rating-row a{ color:var(--sub); text-decoration:underline; text-underline-offset:2px; }
+  .rating-row a:hover{ color:var(--green); }
+
+  /* power-on moment: readout and LEDs flicker up from a dim-but-visible
+     state, never from invisible — the switches themselves (the primary
+     action) carry no entrance animation at all and are always present. */
+  @media (prefers-reduced-motion: no-preference){
+    .readout-line{ animation: flicker-in .4s ease-out both; }
+    .readout-line:nth-child(1){ animation-delay:.05s; }
+    .readout-line:nth-child(3){ animation-delay:.2s; }
+    .readout-line:nth-child(5){ animation-delay:.35s; }
+    @keyframes flicker-in{
+      0%{ opacity:.35; }
+      35%{ opacity:.85; }
+      50%{ opacity:.5; }
+      100%{ opacity:1; }
+    }
+    .led{ animation: led-warm .5s ease-out .5s both; }
+    @keyframes led-warm{ 0%{ filter:brightness(.6); } 100%{ filter:brightness(1); } }
+  }
+
+  @media (max-width:560px){
+    .switch{ width:104px; padding:12px 10px 10px; }
+    .console{ padding:36px 16px 26px; }
+    .plate{ padding:24px 18px; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <img class="logo" src="logo.png" alt="Torre Matrix LLC">
-    <h1>Torre Matrix LLC</h1>
-    <div class="kick">// Software, websites &amp; business services</div>
+
+<svg class="circuit-bg" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"></svg>
+
+<div class="frame">
+ <div class="chassis brushed">
+  <div class="rivet tl"></div><div class="rivet tr"></div><div class="rivet bl"></div><div class="rivet br"></div>
+
+  <header class="console">
+
+    <img class="logo" src="logo.png" alt="Torre Matrix">
+
+    <h1 class="readout">
+      <span class="readout-line">$0 DOWN</span>
+      <span class="readout-sep">·</span>
+      <span class="readout-line">24–48HR TURNAROUND</span>
+      <span class="readout-sep">·</span>
+      <span class="readout-line">CATHEDRAL CITY, CA</span>
+    </h1>
+    <p class="subhead">Websites built and maintained personally by one operator — plus Overclock and back-office support, all under one roof.</p>
+
+    <nav class="switchbank" aria-label="Torre Matrix services">
+      <a class="switch on primary" href="#packages" data-target="packages" aria-label="Website Packages — primary: request a quote">
+        <span class="toggle" aria-hidden="true"><span class="knob"></span></span>
+        <span class="led" aria-hidden="true"></span>
+        <span class="label">Website<br>Packages</span>
+      </a>
+      <a class="switch" href="#overclock" data-target="overclock">
+        <span class="toggle" aria-hidden="true"><span class="knob"></span></span>
+        <span class="led" aria-hidden="true"></span>
+        <span class="label">Overclock</span>
+      </a>
+      <a class="switch" href="#backoffice" data-target="backoffice">
+        <span class="toggle" aria-hidden="true"><span class="knob"></span></span>
+        <span class="led" aria-hidden="true"></span>
+        <span class="label">Back Office<br>Support</span>
+      </a>
+    </nav>
   </header>
+
+  <div class="seam"></div>
+
   <main>
-    <p class="lede">Torre Matrix LLC is a software development and publishing company based in Cathedral City, California. We build and publish mobile applications, design and build websites, and provide back-office support for small businesses.</p>
+    <section id="packages" class="plate">
+      <h2>Website Packages</h2>
+      <p>A real person builds and maintains your site — not a template, not a support queue. Every plan starts at $0 down: no large build fee up front, just a straightforward monthly rate. The higher tier gets changes turned around in 24–48 hours, because it's the same person who already knows your site, every time.</p>
+      <ul class="spec-list">
+        <li><span>Down payment</span><span>$0</span></li>
+        <li><span>Billing</span><span>Monthly</span></li>
+        <li><span>Change turnaround</span><span>24–48HR (Growth tier)</span></li>
+        <li><span>Based in</span><span>Cathedral City, CA</span></li>
+      </ul>
+      <figure class="report">
+        <div class="label">Client report · Pasta y Chile</div>
+        <blockquote>
+          <p>When we took over South of the Border and turned it into Pasta y Chile, we needed everything new — a name people could find, a real website, and a menu with more than 150 items. Tony handled all of it. He took the photos, went through our whole menu line by line and caught mistakes we never noticed, and set up our domain in our name. I’m not a computer person, so it meant a lot that he explained everything simply and was always a text away. Now we have a website we’re proud to show our customers.</p>
+        </blockquote>
+        <figcaption class="attrib"><span class="who">Osmar Melendez</span><span>Owner, Pasta y Chile · Desert Hot Springs, CA</span><a href="https://pastaychile.com">pastaychile.com →</a></figcaption>
+      </figure>
+      <a class="cta" href="mailto:tony@torrematrix.com?subject=Website%20Package%20Inquiry">REQUEST A QUOTE →</a>
+      <p class="fineprint">Every build is scoped to the job — pricing is quoted per project.</p>
+    </section>
 
-    <div class="card">
-      <h2>▲ OVERCLOCK</h2>
-      <p>Our flagship product — Overclock turns your training into a ranked game. Log lifts, climb from Wood to Challenger, and compete with your gym. Coming soon to iOS &amp; Android.</p>
-      <a class="btn" href="https://overclockapp.com">VISIT OVERCLOCKAPP.COM →</a>
-    </div>
+    <div class="seam"></div>
 
-    <div class="card">
-      <h2>◈ WEBSITE PACKAGES</h2>
-      <p>From a simple one-page site to a full custom build, we design, build, and launch websites tailored to your business — hosted, mobile-friendly, and ready to grow. Every package is scoped to the job, so pricing is quoted per project.</p>
-      <a class="btn" href="mailto:tony@torrematrix.com?subject=Website%20Package%20Inquiry">GET A QUOTE →</a>
-    </div>
+    <section id="overclock" class="plate">
+      <h2>Overclock</h2>
+      <p>Our flagship app turns your training into a ranked game. Log lifts, climb from Wood to Challenger, and compete with your gym. Coming soon to iOS &amp; Android.</p>
+      <a class="cta secondary" href="https://overclockapp.com">VISIT OVERCLOCKAPP.COM →</a>
+    </section>
 
-    <div class="card">
-      <h2>■ BACK OFFICE SUPPORT</h2>
-      <p>AI-assisted back-office help for small businesses: bookkeeping and invoice follow-ups, payroll coordination, data entry and CRM cleanup, scheduling, and general admin support — so you spend less time on paperwork and more time running your business.</p>
-      <a class="btn" href="mailto:tony@torrematrix.com?subject=Back%20Office%20Support%20Inquiry">GET A QUOTE →</a>
-    </div>
+    <div class="seam"></div>
 
-    <div class="card">
-      <h2>◆ CONTACT</h2>
-      <p>General inquiries: <a href="mailto:tony@torrematrix.com">tony@torrematrix.com</a></p>
-    </div>
+    <section id="backoffice" class="plate">
+      <h2>Back Office Support</h2>
+      <p>Back-office help for small businesses: bookkeeping and invoice follow-ups, payroll coordination, data entry and CRM cleanup, scheduling, and general admin support — so you spend less time on paperwork and more time running your business.</p>
+      <a class="cta secondary" href="mailto:tony@torrematrix.com?subject=Back%20Office%20Support%20Inquiry">GET A QUOTE →</a>
+    </section>
   </main>
-  <footer>
-    © 2026 Torre Matrix LLC · Cathedral City, CA
+
+  <div class="seam"></div>
+
+  <footer class="rating-plate">
+    <div class="rating-row"><span>MFR</span><span>Torre Matrix LLC</span></div>
+    <div class="rating-row"><span>LOC</span><span>Cathedral City, CA</span></div>
+    <div class="rating-row"><span>CONTACT</span><a href="mailto:tony@torrematrix.com">tony@torrematrix.com</a></div>
+    <div class="rating-row"><span>REV</span><span>© 2026 · All rights reserved</span></div>
   </footer>
+
+ </div>
 </div>
+
+<script>
+(function(){
+  var svg = document.querySelector('.circuit-bg');
+  if(svg){
+    var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var COUNT = 12;
+    for(var i = 0; i < COUNT; i++){
+      var yStart = 60 + i * 68;
+      var midY = (i % 2 === 0) ? yStart - 220 : yStart + 240;
+      var endY = 90 + i * 60;
+      var d = 'M-100 ' + yStart + ' C 420 ' + midY + ', 900 ' + (endY - 100) + ', 1540 ' + endY;
+      var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('stroke-opacity', (0.12 + (i % 6) * 0.035).toFixed(3));
+      path.setAttribute('stroke-width', (0.8 + (i % 4) * 0.35).toFixed(2));
+      if(!reduceMotion){
+        var segment = 260 + i * 15;
+        path.style.strokeDasharray = segment + ' ' + (segment * 6);
+        path.style.animationDuration = (30 + i * 3) + 's';
+        path.style.animationDelay = (-i * 4) + 's';
+      }
+      svg.appendChild(path);
+    }
+  }
+
+  var switches = Array.prototype.slice.call(document.querySelectorAll('.switch'));
+  var sections = switches.map(function(s){ return document.getElementById(s.dataset.target); });
+
+  function setActive(id){
+    switches.forEach(function(s){
+      s.classList.toggle('on', s.dataset.target === id);
+    });
+  }
+
+  switches.forEach(function(s){
+    s.addEventListener('click', function(e){
+      e.preventDefault();
+      setActive(s.dataset.target);
+      s.classList.add('pressed');
+      setTimeout(function(){
+        s.classList.remove('pressed');
+        var target = document.getElementById(s.dataset.target);
+        if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+      }, 120);
+    });
+  });
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ setActive(entry.target.id); }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function(sec){ if(sec) io.observe(sec); });
+  }
+
+  var chassis = document.querySelector('.chassis');
+  var canHover = matchMedia('(hover:hover)').matches;
+  if(chassis && canHover){
+    chassis.addEventListener('pointermove', function(e){
+      var r = chassis.getBoundingClientRect();
+      chassis.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      chassis.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  }
+
+  // switches are small enough to read as objects, not page furniture —
+  // tilt them toward the pointer, same physical-response language as the
+  // chassis sheen above, just scoped to something pointer-sized
+  if(canHover){
+    var MAX_TILT = 7;
+    switches.forEach(function(sw){
+      sw.addEventListener('pointermove', function(e){
+        var r = sw.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        sw.style.setProperty('--ry', ((px - 0.5) * MAX_TILT * 2) + 'deg');
+        sw.style.setProperty('--rx', ((0.5 - py) * MAX_TILT * 2) + 'deg');
+        sw.style.setProperty('--sx', '1.03');
+        sw.style.setProperty('--px', (px * 100) + '%');
+        sw.style.setProperty('--py', (py * 100) + '%');
+      });
+      sw.addEventListener('pointerleave', function(){
+        sw.style.setProperty('--rx', '0deg');
+        sw.style.setProperty('--ry', '0deg');
+        sw.style.setProperty('--sx', '1');
+      });
+    });
+  }
+})();
+</script>
 </body>
 </html>
