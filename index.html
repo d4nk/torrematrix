@@ -251,6 +251,11 @@
   .rating-row span:first-child{ color:var(--mut); letter-spacing:.08em; }
   .rating-row a{ color:var(--sub); text-decoration:underline; text-underline-offset:2px; }
   .rating-row a:hover{ color:var(--green); }
+  .rating-row span:first-child{ white-space:nowrap; }
+  .rating-row:has(.rating-links){ align-items:center; padding:16px 0; }
+  .rating-links{ display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:16px 30px; }
+  .rating-links a{ white-space:nowrap; }
+  .rating-links img{ display:block; height:30px; width:auto; }
 
   /* power-on moment: readout and LEDs flicker up from a dim-but-visible
      state, never from invisible — the switches themselves (the primary
@@ -399,6 +404,7 @@
     <div class="rating-row"><span>LOC</span><span>Cathedral City, CA</span></div>
     <div class="rating-row"><span>PHONE</span><a href="tel:+14422342863">(442) 234-2863</a></div>
     <div class="rating-row"><span>CONTACT</span><a href="mailto:tony@torrematrix.com">tony@torrematrix.com</a></div>
+    <div class="rating-row"><span>FIND US</span><span class="rating-links"><a href="https://share.google/0zjesKHzEbW092nXA" target="_blank" rel="noopener" aria-label="Torre Matrix LLC on Google"><img src="icons/google.png" alt="Google" width="29" height="30"></a><a href="https://www.facebook.com/profile.php?id=61596135367528" target="_blank" rel="noopener" aria-label="Torre Matrix on Facebook"><img src="icons/facebook.png" alt="Facebook" width="30" height="30"></a><a href="https://www.instagram.com/torrematrix/" target="_blank" rel="noopener" aria-label="Torre Matrix on Instagram"><img src="icons/instagram.png" alt="Instagram" width="30" height="30"></a><a href="https://www.yelp.com/biz/torre-matrix-cathedral-city" target="_blank" rel="noopener" aria-label="Torre Matrix on Yelp"><img src="icons/yelp.png" alt="Yelp" width="27" height="30"></a></span></div>
     <div class="rating-row"><span>REV</span><span>© 2026 · All rights reserved</span></div>
   </footer>
 
