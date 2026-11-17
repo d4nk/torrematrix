@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="description" content="Torre Matrix LLC — website design and builds for local businesses in Cathedral City, California. $0 down, 24–48hr turnaround. Also social media management, Overclock, and back-office support.">
+<meta name="description" content="Torre Matrix LLC — website design and builds for local businesses in Cathedral City, California. $0 down, 48hr changes. Also social media management, Overclock, and back-office support.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Titillium+Web:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -180,7 +180,7 @@
   .label{ font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--sub); line-height:1.35; }
   .switch.on .label{ color:var(--ink); }
   .switch.primary .label::after{
-    content:"— request a quote"; display:block; margin-top:4px;
+    content:"— see prices"; display:block; margin-top:4px;
     font-size:11px; font-weight:600; letter-spacing:.02em; text-transform:none; color:var(--green);
   }
 
@@ -225,6 +225,55 @@
   @media (prefers-reduced-motion: no-preference){
     .cta:not(.secondary):hover::after{ animation: metal-sweep .8s ease-out forwards; }
     @keyframes metal-sweep{ to{ transform:translateX(130%); } }
+  }
+
+  /* ===== price panel =====
+     three columns separated by hairline seams inside the Packages plate
+     (One Chassis Rule: no card per tier). The recommended tier borrows
+     the switch LED's one meaning, "primary/recommended", as a lit LED. */
+  .tiers{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    margin:4px 0 22px;
+  }
+  .tier{ padding:20px 18px 18px; border-left:1px solid var(--line); display:flex; flex-direction:column; }
+  .tier:first-child{ border-left:none; padding-left:2px; }
+  .tier:last-child{ padding-right:2px; }
+  .tier-head{ display:flex; align-items:center; gap:8px; min-height:18px; margin-bottom:6px; }
+  .tier-head .led{ flex:none; }
+  .tier.rec .led{ background:var(--green); box-shadow:0 0 8px 2px rgba(21,211,62,.65); }
+  .tier-flag{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); }
+  .tier.rec .tier-flag{ color:var(--green); }
+  .tier h3{
+    font-family:'Aldrich',sans-serif; font-weight:400; letter-spacing:.02em;
+    font-size:17px; margin:0 0 2px; color:var(--ink);
+    text-shadow: 0 -1px 0 rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.06);
+  }
+  .tier .who{ color:var(--sub); font-size:13.5px; margin:0 0 12px; line-height:1.45; }
+  .tier .price{
+    font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--green);
+    font-size:30px; line-height:1; letter-spacing:-.01em;
+  }
+  .tier .price small{ font-size:13px; font-weight:600; color:var(--sub); letter-spacing:0; }
+  .tier .save{ font-family:'JetBrains Mono',monospace; font-weight:600; font-size:11.5px; color:var(--sub); margin:6px 0 0; }
+  .tier .lead{ color:var(--ink); font-size:13px; font-weight:600; margin:14px 0 4px; }
+  .tier ul{ list-style:none; margin:14px 0 0; padding:0; font-size:13.5px; color:var(--sub); line-height:1.5; }
+  .tier .lead + ul{ margin-top:0; }
+  .tier li{ position:relative; padding:5px 0 5px 14px; }
+  .tier li::before{ content:""; position:absolute; left:0; top:13px; width:6px; height:1px; background:var(--green); }
+  .tier li b{ color:var(--ink); font-weight:600; }
+  .plate h3.sub{
+    font-family:'Aldrich',sans-serif; font-weight:400; letter-spacing:.04em; text-transform:uppercase;
+    font-size:13px; color:var(--ink); margin:0 0 8px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.06);
+  }
+  .spec-list.priced li span:first-child{ text-transform:none; letter-spacing:0; font-size:13px; color:var(--ink); }
+  .spec-list.priced li small{ display:block; color:var(--mut); font-size:12px; line-height:1.4; }
+  .spec-list.priced li span:last-child{ white-space:nowrap; }
+  @media (max-width:720px){
+    .tiers{ grid-template-columns:1fr; }
+    .tier{ border-left:none; border-top:1px solid var(--line); padding:20px 2px 18px; }
+    .tier:first-child{ border-top:none; }
   }
 
   /* ===== client report (testimonial) =====
@@ -285,6 +334,21 @@
     .console{ padding:36px 16px 26px; }
     .plate{ padding:24px 18px; }
   }
+  /* ===== "Something else in mind?" form ===== */
+  .custom{ margin-top:30px; padding-top:22px; border-top:1px solid var(--line); scroll-margin-top:24px; }
+  .custom > p{ color:var(--sub); margin:0 0 14px; }
+  .ask{ display:grid; gap:12px; margin:0; }
+  .ask label{ display:grid; gap:6px; font-size:13px; color:var(--ink); }
+  .ask .opt{ color:var(--mut); }
+  .ask input, .ask textarea{
+    width:100%; font:inherit; font-size:16px; color:var(--ink); background:var(--recess);
+    border:1px solid var(--line); border-radius:9px; padding:10px 12px; resize:vertical;
+  }
+  .ask input::placeholder, .ask textarea::placeholder{ color:var(--mut); }
+  .ask input:focus, .ask textarea:focus{ outline:2px solid var(--green-dim); outline-offset:1px; border-color:var(--green-dim); }
+  .ask button{ justify-self:start; border:0; cursor:pointer; }
+  .ask .hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+  .custom .sent{ color:var(--green); font-family:'JetBrains Mono',monospace; font-size:13px; }
 </style>
 </head>
 <body>
@@ -302,14 +366,14 @@
     <h1 class="readout">
       <span class="readout-line">$0 DOWN</span>
       <span class="readout-sep">·</span>
-      <span class="readout-line">24–48HR TURNAROUND</span>
+      <span class="readout-line">48HR CHANGES</span>
       <span class="readout-sep">·</span>
       <span class="readout-line">CATHEDRAL CITY, CA</span>
     </h1>
     <p class="subhead">Websites built and maintained in-house for local businesses, with a direct line to the owner — plus social media, Overclock, and back-office support, all under one roof.</p>
 
     <nav class="switchbank" aria-label="Torre Matrix services">
-      <a class="switch on primary" href="#packages" data-target="packages" aria-label="Website Packages — primary: request a quote">
+      <a class="switch on primary" href="#packages" data-target="packages" aria-label="Website Packages — primary: see prices">
         <span class="toggle" aria-hidden="true"><span class="knob"></span></span>
         <span class="led" aria-hidden="true"></span>
         <span class="label">Website<br>Packages</span>
@@ -337,11 +401,70 @@
   <main>
     <section id="packages" class="plate">
       <h2>Website Packages</h2>
-      <p>We build and maintain your site in-house — not a template, not a support queue. Every plan starts at $0 down: no large build fee up front, just a straightforward monthly rate. The higher tier gets changes turned around in 24–48 hours, because your site never gets handed off to someone who doesn't know it.</p>
+      <p>We build and maintain your site in-house — not a template, not a support queue. Every plan starts at $0 down: no large build fee up front, just a straightforward monthly rate. On the two bigger packages, changes are done within 48 hours, because your site never gets handed off to someone who doesn't know it.</p>
+
+      <div class="tiers">
+        <div class="tier">
+          <div class="tier-head"><span class="led" aria-hidden="true"></span><span class="tier-flag">Website</span></div>
+          <h3>Starter</h3>
+          <p class="who">A clean website that brings you customers.</p>
+          <div class="price">$99<small> /month</small></div>
+          <ul>
+            <li>Your site, up to <b>5 pages</b></li>
+            <li>Your <b>own .com</b> in your name, plus hosting and the security padlock</li>
+            <li>Tap-to-call and directions</li>
+            <li>Your Google listing linked to your site</li>
+            <li><b>2 changes a month</b></li>
+          </ul>
+        </div>
+        <div class="tier rec">
+          <div class="tier-head"><span class="led" aria-hidden="true"></span><span class="tier-flag">Most popular</span></div>
+          <h3>Spotlight</h3>
+          <p class="who">Your site, plus staying on top of Google.</p>
+          <div class="price">$199<small> /month</small></div>
+          <p class="save">Saves $39 a month vs. buying these separately</p>
+          <p class="lead">Everything in Starter, plus:</p>
+          <ul>
+            <li>Up to <b>8 pages</b></li>
+            <li><b>8 changes a month</b>, done within 48 hours</li>
+            <li><b>Google profile care:</b> 4 Google posts a month, replies to your reviews, fresh photos</li>
+            <li>A visit for new photos and video <b>every 6 months</b></li>
+            <li><b>2 custom NFC stands included</b></li>
+          </ul>
+        </div>
+        <div class="tier">
+          <div class="tier-head"><span class="led" aria-hidden="true"></span><span class="tier-flag">Everything</span></div>
+          <h3>Full Service</h3>
+          <p class="who">We run your whole online presence. You run your business.</p>
+          <div class="price">$299<small> /month</small></div>
+          <p class="save">Saves $118 a month vs. buying these separately</p>
+          <p class="lead">Everything in Spotlight, plus:</p>
+          <ul>
+            <li><b>Instagram and Facebook run for you:</b> 3 posts a week, plus Stories for specials and events</li>
+            <li>Comments and messages answered within 1 business day; your pages stay in your name</li>
+            <li>Visits <b>every 4 months</b> instead of 6</li>
+            <li><b>30 changes a month</b>, done within 48 hours</li>
+            <li><b>3 custom NFC stands included</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="sub">Build your own</h3>
+      <ul class="spec-list priced">
+        <li><span>Website, Starter level<small>Everything in the Starter column</small></span><span>$99/mo</span></li>
+        <li><span>Website, Growth level<small>Up to 8 pages, 8 changes a month, a visit for new photos and video every 6 months</small></span><span>$179/mo</span></li>
+        <li><span>Google profile care<small>4 Google posts a month, review replies, photos. Month to month</small></span><span>$59/mo</span></li>
+        <li><span>Instagram + Facebook management<small>3 posts a week, replies within 1 business day, pages stay yours</small></span><span>$179/mo</span></li>
+        <li><span>Google listing setup or cleanup<small>One time. Free with any package or with Google profile care</small></span><span>$99</span></li>
+        <li><span>Custom NFC stand with QR<small>Made for your business; customers tap or scan it to open whatever you choose: your reviews, menu, booking or site. $30 for clients</small></span><span>$35 each</span></li>
+        <li><span>Basic NFC placard with QR<small>Tap or scan to open whatever you choose: your reviews, menu, booking or site. $20 for clients</small></span><span>$25 each</span></li>
+      </ul>
+      <p class="fineprint">Stands are optional. Spotlight comes with 2 and Full Service with 3, and more are available on request. You don't need one to grow; they just make it easier for happy customers to find you. Reviews, the fair way: we never pay for reviews, reward them, ask only happy customers, or pressure anyone at the counter. That's Google's rule, and ours.</p>
+
       <ul class="spec-list">
-        <li><span>Down payment</span><span>$0</span></li>
-        <li><span>Billing</span><span>Monthly</span></li>
-        <li><span>Change turnaround</span><span>24–48HR (Growth tier)</span></li>
+        <li><span>At signing</span><span>$0</span></li>
+        <li><span>Term</span><span>12 months on website plans</span></li>
+        <li><span>Your price</span><span>Locked for your whole term</span></li>
         <li><span>Based in</span><span>Cathedral City, CA</span></li>
       </ul>
       <figure class="report">
@@ -358,23 +481,48 @@
         </blockquote>
         <figcaption class="attrib"><span class="who">Norma Jimenez</span><span>Owner, Las Adelitas Market · Bishop, CA</span><a href="https://lasadelitasjgn.com">lasadelitasjgn.com →</a></figcaption>
       </figure>
-      <a class="cta" href="mailto:tony@torrematrix.com?subject=Website%20Package%20Inquiry">REQUEST A QUOTE →</a>
-      <p class="fineprint">Every build is scoped to the job — pricing is quoted per project.</p>
+      <a class="cta" href="mailto:tony@torrematrix.com?subject=Website%20Package">PICK A PACKAGE →</a>
+      <p class="fineprint">1 change = one small edit: a new price, new hours, a photo swap, or one line of text.</p>
+
+      <div id="custom" class="custom">
+        <h3 class="sub">Something else in mind?</h3>
+        <p>Tell us the thing you think we can't do. We'd love to prove you wrong.<br>We'll come back with a plan and a price within 2 days.</p>
+        <p class="sent" id="custom-sent" hidden>Got it, thank you. We'll get back to you within 2 days.</p>
+        <form class="ask" action="https://formsubmit.co/tony@torrematrix.com" method="POST">
+          <input type="hidden" name="_subject" value="Something else in mind? (torrematrix.com)">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://torrematrix.com/?sent=1#custom">
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <label>Your business name and the best way to reach you
+            <input type="text" name="Business and contact" required autocomplete="organization" placeholder="Name, phone or email"></label>
+          <label>What's taking up your time, or what do you wish worked better?
+            <textarea name="What takes your time" rows="3" required></textarea></label>
+          <label>How do you handle it now?
+            <textarea name="How it's handled now" rows="2"></textarea></label>
+          <label>What would "fixed" look like?
+            <textarea name="What fixed looks like" rows="2"></textarea></label>
+          <label><span>Rough budget <span class="opt">(optional)</span></span>
+            <input type="text" name="Rough budget" placeholder="Per month or one time"></label>
+          <button class="cta" type="submit">SEND IT →</button>
+        </form>
+        <p class="fineprint">Rather talk? Call or text <a href="tel:+14422342863">(442) 234-2863</a>.</p>
+      </div>
     </section>
 
     <div class="seam"></div>
 
     <section id="social" class="plate">
       <h2>Social Media Management</h2>
-      <p>We run your Facebook and Instagram for you — photos, posts, and answering customers — using the same photos and video we already shoot for your website. Choose a steady, professional presence, or a more active plan built to grow your following, with Stories, posts for specials and events, and a monthly content visit.</p>
+      <p>We run your Facebook and Instagram for you — photos, posts, and answering customers — using the same photos and video we already shoot for your website. Add it to any website plan, or get it in the Full Service package with Stories for your specials and events.</p>
       <ul class="spec-list">
         <li><span>Platforms</span><span>Facebook + Instagram</span></li>
-        <li><span>Posting</span><span>3–5 posts/week</span></li>
+        <li><span>Price</span><span>$179/mo on its own</span></li>
+        <li><span>Posting</span><span>3 posts a week</span></li>
         <li><span>Captions</span><span>English or bilingual</span></li>
         <li><span>Customer replies</span><span>Within 1 business day</span></li>
         <li><span>Page ownership</span><span>Stays in your name</span></li>
       </ul>
-      <a class="cta secondary" href="mailto:tony@torrematrix.com?subject=Social%20Media%20Management%20Inquiry">GET A QUOTE →</a>
+      <a class="cta secondary" href="mailto:tony@torrematrix.com?subject=Social%20Media%20Management">ADD IT TO MY PLAN →</a>
       <p class="fineprint">Add it to any website plan, billed together on one card. Paid ad spend is separate.</p>
     </section>
 
@@ -421,6 +569,10 @@
  </div>
 </div>
 
+<script>
+  // show the thank-you line after a form send (the form service sends people back to ?sent=1#custom)
+  if (/[?&]sent=1/.test(location.search)) { var cs=document.getElementById("custom-sent"); if (cs) cs.hidden=false; }
+</script>
 <script>
 (function(){
   var svg = document.querySelector('.circuit-bg');
