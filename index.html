@@ -349,6 +349,11 @@
   .ask button{ justify-self:start; border:0; cursor:pointer; }
   .ask .hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
   .custom .sent{ color:var(--green); font-family:'JetBrains Mono',monospace; font-size:13px; }
+  .shots{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 20px; }
+  @media (max-width:720px){ .shots{ grid-template-columns:repeat(2,1fr); } }
+  .shots figure{ margin:0; }
+  .shots img{ display:block; width:100%; height:auto; aspect-ratio:3/4; object-fit:cover; border-radius:9px; border:1px solid var(--line); background:var(--recess); }
+  .shots figcaption{ color:var(--mut); font-size:12px; line-height:1.4; margin-top:6px; }
 </style>
 </head>
 <body>
@@ -507,6 +512,30 @@
         </form>
         <p class="fineprint">Rather talk? Call or text <a href="tel:+14422342863">(442) 234-2863</a>.</p>
       </div>
+    </section>
+
+    <div class="seam"></div>
+
+    <section id="stands" class="plate">
+      <h2>NFC Tap Stands</h2>
+      <p>A customer taps their phone on the stand and your Google review page opens. No app, no searching for your name. It can open whatever you choose instead: your menu, your booking page or your website. Phones that don't tap can scan the QR code.</p>
+      <div class="shots">
+        <figure><img src="stands/stand-custom-front.jpg" width="720" height="960" loading="lazy" decoding="async" alt="Black custom NFC stand made for Pasta y Chile, with a tap area for Google reviews and a QR code for the menu"><figcaption>Custom stand, made for Pasta y Chile</figcaption></figure>
+        <figure><img src="stands/stand-custom-angle.jpg" width="720" height="960" loading="lazy" decoding="async" alt="The same custom stand from the side, standing on a counter"><figcaption>Tap for reviews, scan for the menu</figcaption></figure>
+        <figure><img src="stands/placard-basic-front.jpg" width="720" height="960" loading="lazy" decoding="async" alt="Square basic NFC placard reading We would appreciate your Google review, Tap to rate your experience"><figcaption>Basic placard: tap to review</figcaption></figure>
+        <figure><img src="stands/placard-basic-back.jpg" width="720" height="960" loading="lazy" decoding="async" alt="Back of the basic placard covered in 3M double-sided tape"><figcaption>Sticky back for a counter, register or wall</figcaption></figure>
+      </div>
+      <ul class="spec-list">
+        <li><span>Custom stand</span><span>$35 each · $30 for clients</span></li>
+        <li><span>Basic placard</span><span>$25 each · $20 for clients</span></li>
+        <li><span>Sizes</span><span>Stand 3.1 × 4.7 in · Placard 4.7 × 4.7 in</span></li>
+        <li><span>Included</span><span>2 with Spotlight · 3 with Full Service</span></li>
+        <li><span>Opens</span><span>Reviews, menu, booking or site</span></li>
+        <li><span>Works with</span><span>Tap: most phones · QR: any camera</span></li>
+        <li><span>Bulk orders</span><span>Bigger discounts on large quantities</span></li>
+      </ul>
+      <a class="cta secondary" href="mailto:tony@torrematrix.com?subject=NFC%20Tap%20Stand">ORDER A STAND →</a>
+      <p class="fineprint">Need stands for several locations, a whole team or an event? Large quantities are no problem, and the more you order, the less each one costs. Ask us for a quote. Every stand holds a short link we manage, so if your menu or booking page moves, we point it somewhere new and the stand keeps working. Reviews, the fair way: we never pay for reviews, reward them, or pressure anyone at the counter.</p>
     </section>
 
     <div class="seam"></div>
